@@ -2,131 +2,157 @@ import java.lang.Math;
 
 public class Exercise6 {
 
-	// getName
-	public static String getName(String student) {
-		String[] lines = student.split("\n");
-		if (lines == null || lines.length == 0) {
-			return "You must insert the students !";
+	// checkTableCompleteness
+	public static boolean checkTableCompleteness(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
+		String[] elements = studentgroup.split(",");
+		if (elements.length == 6 * lines.length) {
+			return true;
+		} else {
+			return false;
 		}
-		String names = student.split(",")[0].trim();
+	}
+
+	// getName
+	public static String getName(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
+		if (lines == null || lines.length == 0) {
+			return null;
+		}
+		String names = studentgroup.split(",")[0].trim();
 		return names;
 	}
 
 	// getSurname
-	public static String getSurname(String student) {
-		String[] lines = student.split("\n");
+	public static String getSurname(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
 		if (lines == null || lines.length == 0) {
-			return "You must insert the students !";
+			return null;
 		}
-		String surnames = student.split(",")[1].trim();
+		String surnames = studentgroup.split(",")[1].trim();
 		return surnames;
 	}
 
-	// checkNotaLucrare1
-	public static boolean checkNotaLucrare1(String student) {
-		String notalucrare1 = (student.split(",")[2].trim());
-		if (notalucrare1 != null) {
+	// checkNoteWork1
+	public static boolean checkNoteWork1(String studentgroup) {
+		String notework1 = (studentgroup.split(",", -1)[2].trim());
+		if (notework1 != "") {
 			return true;
 		} else
 			return false;
 	}
 
-	// checkNotaLucrare2
-	public static boolean checkNotaLucrare2(String student) {
-		String notalucrare2 = (student.split(",")[3].trim());
-		if (notalucrare2 != null) {
+	// checkNoteWork2
+	public static boolean checkNoteWork2(String studentgroup) {
+		String notework2 = (studentgroup.split(",", -1)[3].trim());
+		if (notework2 != "") {
 			return true;
 		} else
 			return false;
 	}
 
-	// checkNotaTeza
-	public static boolean checkNotaTeza(String student) {
-		String notateza = (student.split(",")[4].trim());
-		if (notateza != null) {
+	// checkNoteResearch
+	public static boolean checkNoteResearch(String studentgroup) {
+		String noteresearch = (studentgroup.split(",", -1)[4].trim());
+		if (noteresearch != "") {
 			return true;
 		} else
 			return false;
 	}
 
-	// getNotaLucrare1
-	public static int getNotaLucrare1(String student) {
-		String[] lines = student.split("\n");
+	// getNoteWork1
+	public static int getNoteWork1(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
+		int notework1;
 		if (lines == null || lines.length == 0) {
 			return -1;
 		}
-		int notalucrare1 = Integer.parseInt(student.split(",")[2].trim());
-		return notalucrare1;
+		String token = studentgroup.split(",", -1)[2].trim();
+		if (token == "") {
+			notework1 = -1;
+		} else {
+			notework1 = Integer.parseInt(token);
+		}
+		return notework1;
 	}
 
-	// getNotaLucrare2
-	public static int getNotaLucrare2(String student) {
-		String[] lines = student.split("\n");
+	// getNotework2
+	public static int getNoteWork2(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
 		if (lines == null || lines.length == 0) {
 			return -1;
 		}
-		int notalucrare2 = Integer.parseInt(student.split(",")[3].trim());
-		return notalucrare2;
+		int notework2 = Integer.parseInt(studentgroup.split(",", -1)[3].trim());
+		return notework2;
 	}
 
-	// getNotaTeza
-	public static int getNotaTeza(String student) {
-		String[] lines = student.split("\n");
+	// getNoteResearch
+	public static int getNoteResearch(String studentroup) {
+		String[] lines = studentroup.split("\n");
 		if (lines == null || lines.length == 0) {
 			return -1;
 		}
-		int notateza = Integer.parseInt(student.split(",")[4].trim());
-		return notateza;
+		int noteresearch = Integer.parseInt(studentroup.split(",", -1)[4].trim());
+		return noteresearch;
 	}
 
-	// getNumarAbsente
-	public static int getNumarAbsente(String student) {
-		int numarabsente = Integer.parseInt(student.split(",")[5].trim());
-		return numarabsente;
+	// getNumberMissings
+	public static int getNumberMissings(String studentgroup) {
+		int numbermissings = Integer.parseInt(studentgroup.split(",")[5].trim());
+		return numbermissings;
 	}
 
 	// getAverageNote
-	public static int[] getAverageNote(String student) {
-		String[] lines = student.split("\n");
+	public static int[] getAverageNote(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
 		int[] averagenote = new int[lines.length];
 		for (int i = 0; i <= lines.length - 1; i++) {
-			if (checkNotaTeza(lines[i])) {
-				if (checkNotaLucrare1(lines[i]) || checkNotaLucrare2(lines[i])) {
-					if (getNumarAbsente(lines[i]) < 7) {
-						averagenote[i] = Math.round(
-								((getNotaTeza(lines[i]) + (getNotaLucrare1(lines[i]) + getNotaLucrare2(lines[i])) / 2)
-										/ 2));
+			if (checkNoteResearch(lines[i]) == false) {
+				averagenote[i] = 4;
+			} else {
+				if (getNumberMissings(lines[i]) < 7) {
+
+					if (checkNoteWork1(lines[i]) == false && checkNoteWork2(lines[i]) == true) {
+						averagenote[i] = Math
+								.round(((getNoteResearch(lines[i]) + (3 + getNoteWork2(lines[i])) / 2) / 2));
+					}
+					if (checkNoteWork1(lines[i]) == true && checkNoteWork2(lines[i]) == false) {
+						averagenote[i] = Math
+								.round(((getNoteResearch(lines[i]) + (getNoteWork1(lines[i]) + 3) / 2) / 2));
+					}
+					if (checkNoteWork1(lines[i]) == false && checkNoteWork2(lines[i]) == false) {
+						averagenote[i] = Math.round(((getNoteResearch(lines[i]) + (3 + 3) / 2) / 2));
 					} else {
 						averagenote[i] = Math.round(
-								((getNotaTeza(lines[i]) + (getNotaLucrare1(lines[i]) + getNotaLucrare2(lines[i])) / 2)
-										/ 2) - 1);
+								((getNoteResearch(lines[i]) + (getNoteWork1(lines[i]) + getNoteWork2(lines[i])) / 2)
+										/ 2));
 					}
 				} else {
-					averagenote[i] = 3;
+					averagenote[i] = Math.round(
+							((getNoteResearch(lines[i]) + (getNoteWork1(lines[i]) + getNoteWork2(lines[i])) / 2) / 2)
+									- 1);
 				}
-			} else {
-				averagenote[i] = 4;
 			}
 		}
 		return averagenote;
 	}
 
 	// displaygetAverageNote
-	public static void displayAverageNote(String student) {
-		String[] lines = student.split("\n");
+	public static void displayAverageNote(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
 		for (int i = 0; i <= lines.length - 1; i++) {
-			System.out.println(getName(lines[i]) + " " + getSurname(lines[i]) + ": " + getAverageNote(student)[i]);
+			System.out.println(getName(lines[i]) + " " + getSurname(lines[i]) + ": " + getAverageNote(studentgroup)[i]);
 		}
 	}
 
 	// CERINTA 2 -------------------------------------
 
 	// displayGeneralAverageNote
-	public static void displayGeneralAverageNote(String student) {
-		String[] lines = student.split("\n");
+	public static void displayGeneralAverageNote(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
 		double sum = 0;
 		for (int i = 0; i <= lines.length - 1; i++) {
-			sum = sum + getAverageNote(student)[i];
+			sum = sum + getAverageNote(studentgroup)[i];
 		}
 		System.out.println((sum / lines.length));
 	}
@@ -134,49 +160,52 @@ public class Exercise6 {
 	// CERINTA 3 --------------------------------------
 
 	// getWorstAverage
-	private static int getWorstAverage(String student) {
-		String[] lines = student.split("\n");
+	private static int getWorstAverage(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
 		int min = Integer.MAX_VALUE;
 		for (int i = 0; i <= lines.length - 1; i++) {
-			if (min > getAverageNote(student)[i]) {
-				min = getAverageNote(student)[i];
+			if (min > getAverageNote(studentgroup)[i]) {
+				min = getAverageNote(studentgroup)[i];
 			}
 		}
 		return min;
 	}
 
 	// displayWorstStudent
-	private static void displayWorstStudent(String student) {
-		String[] lines = student.split("\n");
+	private static void displayWorstStudent(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
 		String worst = getName(lines[0]) + " " + getSurname(lines[0]);
-
-		for (int i = 0; i < lines.length - 1; i++) {
-			if (getAverageNote(student)[i] > getAverageNote(student)[i + 1]) {
-				worst = getName(lines[i + 1]) + " " + getSurname(lines[i + 1]);
+		int min = Integer.MAX_VALUE;
+		for (int i = 0; i <= lines.length - 1; i++) {
+			if (min > getAverageNote(studentgroup)[i]) {
+				min = getAverageNote(studentgroup)[i];
+				worst = getName(lines[i]) + " " + getSurname(lines[i]);
 			}
 		}
 		System.out.print(worst + ", ");
 	}
 
 	// getBestAverage
-	private static int getBestAverage(String student) {
-		String[] lines = student.split("\n");
+	private static int getBestAverage(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
 		int max = Integer.MIN_VALUE;
 		for (int i = 0; i <= lines.length - 1; i++) {
-			if (max < getAverageNote(student)[i]) {
-				max = getAverageNote(student)[i];
+			if (max < getAverageNote(studentgroup)[i]) {
+				max = getAverageNote(studentgroup)[i];
 			}
 		}
 		return max;
 	}
 
 	// displayBestStudent
-	private static void displayBestStudent(String student) {
-		String[] lines = student.split("\n");
+	private static void displayBestStudent(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
 		String best = getName(lines[0]) + " " + getSurname(lines[0]);
-		for (int i = 0; i < lines.length - 1; i++) {
-			if (getAverageNote(student)[i] < getAverageNote(student)[i + 1]) {
-				best = getName(lines[i + 1]) + " " + getSurname(lines[i + 1]);
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i <= lines.length - 1; i++) {
+			if (max < getAverageNote(studentgroup)[i]) {
+				max = getAverageNote(studentgroup)[i];
+				best = getName(lines[i]) + " " + getSurname(lines[i]);
 			}
 		}
 		System.out.print(best + ", ");
@@ -185,27 +214,33 @@ public class Exercise6 {
 	// ------------------------------
 	public static void main(String[] args) {
 
-		String students = "Isaac, Newton,10,10, 10, 2\n" + "Albert, Einstein, 2, 2, 2, 5\n"
-				+ "Enrico, Fermi, 2, 2 , 9, 4\n" + "Max, Planck, 3, 3, 4, 9\n" + "Michael, Faraday, 8, 8, 7, 1\n";
+		String students = "Isaac, Newton,4, 10, 10, 2,\n" + "Albert, Einstein, 5, 1, 1, 5,\n"
+				+ "Enrico, Fermi, 2, 3 , 9, 4,\n" + "Max, Planck, 3, 3, 4, 9,\n" + "Michael, Faraday, 1, 4, 4, 1\n";
 
 		System.out.println("Here are the students: ");
 		System.out.println(students);
 
-		System.out.println("Average Note for every students: ");
-		displayAverageNote(students);
-		System.out.println();
+		checkTableCompleteness(students);
+		if (checkTableCompleteness(students) == false) {
+			System.out.println("Provide the Table in the correct format");
 
-		System.out.print("General Average Note of the class is: ");
-		displayGeneralAverageNote(students);
-		System.out.println();
+		} else {
+			System.out.println("Average Note for every students: ");
+			displayAverageNote(students);
+			System.out.println();
 
-		System.out.print("WorstStudent: ");
-		displayWorstStudent(students);
-		System.out.print(getWorstAverage(students) + " \n");
+			System.out.print("General Average Note of the class is: ");
+			displayGeneralAverageNote(students);
+			System.out.println();
 
-		System.out.print("BestStudent: ");
-		displayBestStudent(students);
-		System.out.print(getBestAverage(students));
+			System.out.print("Worst Student: ");
+			displayWorstStudent(students);
+			System.out.print("average note: " + getWorstAverage(students) + " \n");
 
+			System.out.print("Best Student: ");
+			displayBestStudent(students);
+			System.out.print("average note: " + getBestAverage(students));
+
+		}
 	}
 }
