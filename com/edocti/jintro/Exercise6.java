@@ -83,7 +83,7 @@ public class Exercise6 {
 		if (lines == null || lines.length == 0) {
 			return -1;
 		}
-		String token = studentgroup.split(",", -1)[2].trim();
+		String token = studentgroup.split(",", -1)[3].trim();
 		if (token.equals("")) {
 			notework2 = -1;
 		} else {
@@ -99,7 +99,7 @@ public class Exercise6 {
 		if (lines == null || lines.length == 0) {
 			return -1;
 		}
-		String token = studentgroup.split(",", -1)[2].trim();
+		String token = studentgroup.split(",", -1)[4].trim();
 		if (token.equals("")) {
 			noteresearch = -1;
 		} else {
@@ -127,22 +127,39 @@ public class Exercise6 {
 					if (checkNoteWork1(lines[i]) == false && checkNoteWork2(lines[i]) == true) {
 						averagenote[i] = Math
 								.round(((getNoteResearch(lines[i]) + (3 + getNoteWork2(lines[i])) / 2) / 2));
+						if (averagenote[i] < 0) {
+							averagenote[i] = 0;
+						}
 					}
 					if (checkNoteWork1(lines[i]) == true && checkNoteWork2(lines[i]) == false) {
 						averagenote[i] = Math
 								.round(((getNoteResearch(lines[i]) + (getNoteWork1(lines[i]) + 3) / 2) / 2));
+						if (averagenote[i] < 0) {
+							averagenote[i] = 0;
+						}
 					}
 					if (checkNoteWork1(lines[i]) == false && checkNoteWork2(lines[i]) == false) {
 						averagenote[i] = Math.round(((getNoteResearch(lines[i]) + (3 + 3) / 2) / 2));
+						if (averagenote[i] < 0) {
+							averagenote[i] = 0;
+						}
+
 					} else {
 						averagenote[i] = Math.round(
 								((getNoteResearch(lines[i]) + (getNoteWork1(lines[i]) + getNoteWork2(lines[i])) / 2)
 										/ 2));
+						if (averagenote[i] < 0) {
+							averagenote[i] = 0;
+						}
 					}
 				} else {
 					averagenote[i] = Math.round(
 							((getNoteResearch(lines[i]) + (getNoteWork1(lines[i]) + getNoteWork2(lines[i])) / 2) / 2)
 									- 1);
+					if (averagenote[i] < 0) {
+						averagenote[i] = 0;
+					}
+
 				}
 			}
 		}
@@ -226,8 +243,8 @@ public class Exercise6 {
 	// ------------------------------
 	public static void main(String[] args) {
 
-		String students = "Isaac, Newton,4, 10, 10, 2,\n" + "Albert, Einstein, 5, 1, 1, 5,\n"
-				+ "Enrico, Fermi, 2, 3 , 9, 4,\n" + "Max, Planck, 3, 3, 4, 9,\n" + "Michael, Faraday, 1, 4, 4, 1\n";
+		String students = "Isaac, Newton,6, 10, 9, 2,\n" + "Albert, Einstein, , 8, 7, 5,\n"
+				+ "Enrico, Fermi, 8, 8 , 9, 4,\n" + "Max, Planck,3 , 3, , 9,\n" + "Michael, Faraday, 7, 4, 5, 1\n";
 
 		System.out.println("Here are the students: ");
 		System.out.println(students);
