@@ -36,7 +36,7 @@ public class Exercise6 {
 	// checkNoteWork1
 	public static boolean checkNoteWork1(String studentgroup) {
 		String notework1 = (studentgroup.split(",", -1)[2].trim());
-		if (notework1 != "") {
+		if (!notework1.equals("")) {
 			return true;
 		} else
 			return false;
@@ -45,7 +45,7 @@ public class Exercise6 {
 	// checkNoteWork2
 	public static boolean checkNoteWork2(String studentgroup) {
 		String notework2 = (studentgroup.split(",", -1)[3].trim());
-		if (notework2 != "") {
+		if (!notework2.equals("")) {
 			return true;
 		} else
 			return false;
@@ -54,7 +54,7 @@ public class Exercise6 {
 	// checkNoteResearch
 	public static boolean checkNoteResearch(String studentgroup) {
 		String noteresearch = (studentgroup.split(",", -1)[4].trim());
-		if (noteresearch != "") {
+		if (!noteresearch.equals("")) {
 			return true;
 		} else
 			return false;
@@ -68,7 +68,7 @@ public class Exercise6 {
 			return -1;
 		}
 		String token = studentgroup.split(",", -1)[2].trim();
-		if (token == "") {
+		if (token.equals("")) {
 			notework1 = -1;
 		} else {
 			notework1 = Integer.parseInt(token);
@@ -79,20 +79,32 @@ public class Exercise6 {
 	// getNotework2
 	public static int getNoteWork2(String studentgroup) {
 		String[] lines = studentgroup.split("\n");
+		int notework2;
 		if (lines == null || lines.length == 0) {
 			return -1;
 		}
-		int notework2 = Integer.parseInt(studentgroup.split(",", -1)[3].trim());
+		String token = studentgroup.split(",", -1)[2].trim();
+		if (token.equals("")) {
+			notework2 = -1;
+		} else {
+			notework2 = Integer.parseInt(token);
+		}
 		return notework2;
 	}
 
 	// getNoteResearch
-	public static int getNoteResearch(String studentroup) {
-		String[] lines = studentroup.split("\n");
+	public static int getNoteResearch(String studentgroup) {
+		String[] lines = studentgroup.split("\n");
+		int noteresearch;
 		if (lines == null || lines.length == 0) {
 			return -1;
 		}
-		int noteresearch = Integer.parseInt(studentroup.split(",", -1)[4].trim());
+		String token = studentgroup.split(",", -1)[2].trim();
+		if (token.equals("")) {
+			noteresearch = -1;
+		} else {
+			noteresearch = Integer.parseInt(token);
+		}
 		return noteresearch;
 	}
 
